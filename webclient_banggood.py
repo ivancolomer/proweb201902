@@ -33,7 +33,12 @@ class WebClientBanggood(object):
         for activity in activities:
             if activity.has_attr("data-product-id"):
                 title = activity.find("span", "title").find("a")
-                print(title.text, "[" + title["href"] + "]")
+                price = activity.find("span", {"class" : "price"})
+                link = title["href"]
+
+                print(title.text)
+                print(link)
+                print(price.text)
                 print()
 
 
