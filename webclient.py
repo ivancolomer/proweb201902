@@ -1,6 +1,7 @@
 
 
 from urllib.request import urlopen
+import bs4
 
 class WebClient(object):
     """WebClient class"""
@@ -16,12 +17,22 @@ class WebClient(object):
         f.close()
         return page
 
+
     def run(self):
         # download a web page
         page = self.download_page()
         # search activities in web page
+        data = self.search_activities(page)
         # print the activities
-        print(page)
+        #print(page)
+
+    def search_activities(self, page):
+        tree = bs4.BeautifulSoup(page, "lxml")
+        activities = tree.find_all("div", "featured-links-item")
+        for activity in activities:
+            title = activity.find("span", "flink-title")
+            link = activity.find("a")
+            print(title.text, link["href"])
 
 
 if __name__ == "__main__":
