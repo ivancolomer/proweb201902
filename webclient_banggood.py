@@ -24,7 +24,8 @@ class WebClientBanggood(object):
         # search activities in web page
         data = self.search_activities(page)
         # print the activities
-        #print(page)
+        for activity in data:
+            print(activity)
 
     def search_activities(self, page):
         tree = bs4.BeautifulSoup(page, "lxml")
@@ -36,10 +37,7 @@ class WebClientBanggood(object):
                 price = activity.find("span", {"class" : "price"})
                 link = title["href"]
 
-                print(title.text)
-                print(link)
-                print(price.text)
-                print()
+                yield title.text + "\n" + link + "\n" + price.text + "\n"
 
 
 if __name__ == "__main__":
